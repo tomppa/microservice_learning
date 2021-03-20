@@ -5,4 +5,5 @@ metadata:
 spec:
   containers:
     - name: posts
-      image: microservice-demo/posts:0.0.1
+      image: outs4m/blog-posts:0.0.1
+      imagePullPolicy: Never
