@@ -14,5 +14,4 @@ spec:
     spec:
       containers:
         - name: posts
-          image: outs4m/blog-posts:0.0.1
-          imagePullPolicy: Never
+          image: outs4m/blog-posts
