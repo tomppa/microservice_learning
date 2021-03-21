@@ -9,8 +9,8 @@ spec:
     - host: demo-blog.com
       http:
         paths:
-          - path: /posts
-            pathType: Prefix
+          - path: /posts/create
+            pathType: Exact
             backend:
               service:
                 name: posts-clusterip-service
