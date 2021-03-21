@@ -12,7 +12,7 @@ const posts = {};
 
 async function postToEventBus(event) {
   await axios
-    .post(`http://event-bus-clusterip-service:4005/events`, event)
+    .post('http://event-bus-clusterip-service:4005/events', event)
     .catch((err) => {
       console.log(err.message);
     });

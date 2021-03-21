@@ -28,9 +28,9 @@ app.post('/events', async (req, res) => {
   events.push(event);
 
   await postEvent('posts', event);
-  // await postEvent('comments', event);
-  // await postEvent('query', event);
-  // await postEvent('moderation', event);
+  await postEvent('comments', event);
+  await postEvent('query', event);
+  await postEvent('moderation', event);
 
   res.send({ status: 'OK' });
 });
