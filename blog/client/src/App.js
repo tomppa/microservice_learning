@@ -1,10 +1,10 @@
-import React from "react";
-import PostCreate from "./PostCreate";
-import PostList from "./PostList";
+import React from 'react';
+import PostCreate from './PostCreate';
+import PostList from './PostList';
 
 export default () => {
   return (
-    <div className="container">
+    <div className='container'>
       <h1>Create post</h1>
       <PostCreate />
 
