@@ -10,6 +10,14 @@ app.use(cors());
 
 const commentsByPostId = {};
 
+async function postToEventBus(event) {
+  await axios
+    .post('http://event-bus-clusterip-service:4005/events', event)
+    .catch((err) => {
+      console.log(err.message);
+    });
+}
+
 app.get('/posts/:id/comments', (req, res) => {
   res.send(commentsByPostId[req.params.id] || []);
 });
@@ -25,7 +33,7 @@ app.post('/posts/:id/comments', async (req, res) => {
 
   commentsByPostId[postId] = comments;
 
-  await axios.post('http://localhost:4005/events', {
+  postToEventBus({
     type: 'CommentCreated',
     data: {
       id: commentId,
@@ -52,7 +60,7 @@ app.post('/events', async (req, res) => {
     });
     comment.status = status;
 
-    await axios.post('http://localhost:4005/events', {
+    postToEventBus({
       type: 'CommentUpdated',
       data: {
         id,

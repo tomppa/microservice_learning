@@ -7,21 +7,30 @@ app.use(bodyParser.json());
 
 const events = [];
 
-function postEvent(port, event) {
-  axios.post(`http://localhost:${port}/events`, event).catch((err) => {
+async function postEvent(component, event) {
+  const port = {
+    posts: 4000,
+    comments: 4001,
+    query: 4002,
+    moderation: 4003,
+  }[component];
+
+  const address = `http://${component}-clusterip-service:${port}/events`;
+
+  await axios.post(address, event).catch((err) => {
     console.log(err.message);
   });
 }
 
-app.post('/events', (req, res) => {
+app.post('/events', async (req, res) => {
   const event = req.body;
 
   events.push(event);
 
-  postEvent(4000, event);
-  postEvent(4001, event);
-  postEvent(4002, event);
-  postEvent(4003, event);
+  await postEvent('posts', event);
+  // await postEvent('comments', event);
+  // await postEvent('query', event);
+  // await postEvent('moderation', event);
 
   res.send({ status: 'OK' });
 });

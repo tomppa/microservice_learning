@@ -10,6 +10,14 @@ app.use(cors());
 
 const posts = {};
 
+async function postToEventBus(event) {
+  await axios
+    .post(`http://event-bus-clusterip-service:4005/events`, event)
+    .catch((err) => {
+      console.log(err.message);
+    });
+}
+
 app.get('/posts', (req, res) => {
   res.send(posts);
 });
@@ -23,7 +31,7 @@ app.post('/posts', async (req, res) => {
     title,
   };
 
-  await axios.post('http://localhost:4005/events', {
+  await postToEventBus({
     type: 'PostCreated',
     data: {
       id,
